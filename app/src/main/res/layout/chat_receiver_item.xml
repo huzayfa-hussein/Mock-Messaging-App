@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_gravity="start"
+    android:background="@drawable/message_left_bg"
+    android:padding="11dp"
+    android:layout_margin="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:typeface="normal"
+        android:id="@+id/receiver_msg_tv"
+        android:gravity="center"
+        android:text="Hello Huzayfa how are you?"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:textColor="@color/dark_kakhi"
+        android:id="@+id/receiver_msg_date_tv"
+        android:layout_below="@+id/receiver_msg_tv"
+        android:text="20:20"
+        android:layout_alignEnd="@id/receiver_msg_tv"
+        android:layout_marginTop="4dp"
+        />
+
+</RelativeLayout>

@@ -4,26 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.UsersListActivity">
+    tools:context=".ui.ChatActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/streel_blue"
-        android:id="@+id/toolbar"
+        android:id="@+id/chat_toolbar"
         android:layout_alignParentTop="true"
         />
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/users_rv"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_below="@+id/toolbar"
-        android:clipToPadding="false"
-        android:clipChildren="false"
-        tools:itemCount="12"
-        tools:listitem="@layout/user_item"
+    <include layout="@layout/content_chat"
         />
-
 
 </RelativeLayout>
