@@ -11,9 +11,9 @@
         android:layout_height="?actionBarSize"
         android:background="@color/streel_blue"
         android:id="@+id/chat_toolbar"
-        android:layout_alignParentTop="true"
         />
-    <include layout="@layout/content_chat"
-        />
+   <include layout="@layout/content_chat"
+
+       />
 
 </RelativeLayout>
