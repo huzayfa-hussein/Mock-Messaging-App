@@ -6,14 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".ui.ChatActivity">
 
+
+   <include layout="@layout/content_chat"
+
+       />
+
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/streel_blue"
         android:id="@+id/chat_toolbar"
-        />
-   <include layout="@layout/content_chat"
+        android:layout_alignParentTop="true"
+        >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        app:cardPreventCornerOverlap="false"
+        android:id="@+id/user_image_cv"
 
-       />
+        >
+        <ImageView
+            android:id="@+id/user_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:id="@+id/user_name_tv"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="9dp"
+        />
+</LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
 </RelativeLayout>

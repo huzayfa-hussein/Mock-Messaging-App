@@ -48,6 +48,10 @@ public class Message implements Parcelable {
         }
         receivedMessage = in.readString();
         sentMessage = in.readString();
+
+        if (in.readByte() == 0) {
+            sendsAt = null;
+        } else sendsAt = new Date(in.readLong());
     }
 
     public static final Creator<Message> CREATOR = new Creator<Message>() {
@@ -83,5 +87,11 @@ public class Message implements Parcelable {
         }
         parcel.writeString(receivedMessage);
         parcel.writeString(sentMessage);
+        if (sendsAt == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(sendsAt.getTime());
+        }
     }
 }

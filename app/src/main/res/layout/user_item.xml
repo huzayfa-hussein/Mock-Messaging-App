@@ -70,6 +70,7 @@
                 android:textColor="@color/silver"
                 android:text="Hello Huzayfa hope you are well!"
                 android:layout_marginEnd="11dp"
+                android:id="@+id/latest_msg_tv"
                 />
             <ImageView
                 android:layout_width="match_parent"

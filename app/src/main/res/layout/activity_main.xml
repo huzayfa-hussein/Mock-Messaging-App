@@ -25,5 +25,14 @@
         tools:listitem="@layout/user_item"
         />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        android:layout_centerInParent="true" />
+
 
 </RelativeLayout>

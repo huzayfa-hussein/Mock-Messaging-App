@@ -15,7 +15,7 @@
         <activity android:name=".ui.ChatActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.UsersListActivity"
-            android:screenOrientation="portrait">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

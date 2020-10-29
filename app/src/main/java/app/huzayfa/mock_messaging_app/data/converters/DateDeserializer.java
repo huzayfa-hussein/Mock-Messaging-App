@@ -18,42 +18,43 @@ import androidx.room.TypeConverter;
 public class DateDeserializer implements JsonDeserializer<Date> {
     private static String[] DATE_FORMAT = new String[]{"yyyy-MM-dd HH:mm:ss",
             "yyyy-MM-dd"};
+    private static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        for (String format : DATE_FORMAT) {
-            try {
-                String date = json.getAsString();
-                SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
-                dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-                return dateFormat.parse(date);
-            } catch (ParseException e) {
-            }
+//        for (String format : DATE_FORMAT) {
+        try {
+            String date = json.getAsString();
+//                SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
+            return df.parse(date);
+        } catch (ParseException e) {
         }
+//        }
         throw new JsonParseException("Unparseable date: \"" + json.getAsString()
                 + "\". Supported formats: \n" + Arrays.toString(DATE_FORMAT));
     }
 
     @TypeConverter
     public static Date fromTimestamp(String value) {
-//        if (value != null) {
-//            try {
-//                TimeZone timeZone = TimeZone.getTimeZone("IST");
-//                df.setTimeZone(timeZone);
-//                return df.parse(value);
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        if (value != null) {
+            try {
+                TimeZone timeZone = TimeZone.getTimeZone("IST");
+                df.setTimeZone(timeZone);
+                return df.parse(value);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
 
     @TypeConverter
     public static String dateToTimestamp(Date value) {
-//        TimeZone timeZone = TimeZone.getTimeZone("IST");
-//        df.setTimeZone(timeZone);
-//            return value == null ? null : df.format(value);
-        return null;
+        TimeZone timeZone = TimeZone.getTimeZone("IST");
+        df.setTimeZone(timeZone);
+        return value == null ? null : df.format(value);
+//        return null;
     }
 }

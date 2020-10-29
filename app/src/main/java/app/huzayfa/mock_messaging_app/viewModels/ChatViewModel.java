@@ -1,9 +1,6 @@
 package app.huzayfa.mock_messaging_app.viewModels;
 
 import android.app.Application;
-import android.util.Log;
-
-import com.github.javafaker.Faker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,83 +11,74 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import app.huzayfa.mock_messaging_app.data.helper.MethodUtility;
+import app.huzayfa.mock_messaging_app.data.models.Message;
 import app.huzayfa.mock_messaging_app.data.models.Resource;
 import app.huzayfa.mock_messaging_app.data.models.User;
-import app.huzayfa.mock_messaging_app.data.repositories.ChatRepository;
+import app.huzayfa.mock_messaging_app.data.models.UserAndMessage;
+import app.huzayfa.mock_messaging_app.data.repositories.AppRepository;
 
 
 public class ChatViewModel extends AndroidViewModel {
 
-    private ChatRepository chatRepository;
+    private AppRepository appRepository;
 
-    private List<User> users;
-
-    private MutableLiveData<Resource<List<User>>> usersListData;
+    private MutableLiveData<Resource<List<Message>>> userMessagesData;
 
     public ChatViewModel(@NonNull Application application) {
         super(application);
-        chatRepository = new ChatRepository(application);
-        usersListData = new MutableLiveData<>();
+        appRepository = new AppRepository(application);
+        userMessagesData = new MutableLiveData<>();
+
     }
 
-
-    public void fetchAllUsers(LifecycleOwner owner) {
-        usersListData.setValue(Resource.loading(null));
-        chatRepository.fetchAllUsers();
-        chatRepository.getUsersListData().observe(owner, listResource -> {
-            switch (listResource.status) {
-                case SUCCESS:
-                    if (listResource.data != null) {
-                        if (listResource.data.isEmpty()) {
-                            setUsers(owner);
-                        } else {
-                            usersListData.setValue(Resource.success(listResource.data));
-                            MethodUtility.toast(getApplication().getApplicationContext(), "Retrieved");
-                        }
-                        chatRepository.getUsersListData().removeObservers(owner);
-                    }
+    public void fetchUserMessages(Long userId, LifecycleOwner owner) {
+        userMessagesData.setValue(Resource.loading(null));
+        appRepository.fetchAllUserMessages();
+        appRepository.getUserMessages().observe(owner, ListResource -> {
+            switch (ListResource.status) {
+                case LOADING:
+                    MethodUtility.toast(getApplication().getApplicationContext(), "Loading");
                     break;
                 case ERROR:
-                    if (listResource.message != null) {
-                        chatRepository.getUsersListData().removeObservers(owner);
-                        MethodUtility.toast(getApplication().getApplicationContext(), listResource.message);
+                    if (ListResource.message != null) {
+                        appRepository.getUserMessages().removeObservers(owner);
+                        userMessagesData.setValue(Resource.error(ListResource.message, null));
+                        MethodUtility.toast(getApplication().getApplicationContext(), ListResource.message);
+
+                    }
+                    break;
+                case SUCCESS:
+                    if (ListResource.data != null) {
+                        appRepository.getUserMessages().removeObservers(owner);
+                        setUserMessages(userId, ListResource.data);
+                        MethodUtility.toast(getApplication().getApplicationContext(), "Success");
                     }
                     break;
             }
         });
-//        if (users == null || users.isEmpty()) {
-//            setUsers();
-//        } else {
-//            usersListData.setValue(Resource.success(users));
-//        }
     }
 
-    public void saveAllUsers(LifecycleOwner owner) {
-        chatRepository.addUsers(users.toArray(new User[0]));
-        fetchAllUsers(owner);
-//        if (insertedUsers != null && !insertedUsers.isEmpty()) {
-//            usersListData.setValue(Resource.success(insertedUsers));
-//        } else {
-//            usersListData.setValue(Resource.error("Failed to fetch Users", null));
-//        }
-    }
-
-
-    private void setUsers(LifecycleOwner owner) {
-        users = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Faker faker = new Faker();
-            User user = new User();
-            user.setName(faker.name().fullName());
-            user.setImage(faker.avatar().image());
-            Log.i("NAME", "setUsers: " + user.getName());
-            users.add(user);
+    private void setUserMessages(Long userId, List<UserAndMessage> data) {
+        List<Message> messageList = new ArrayList<>();
+        for (UserAndMessage userAndMessage : data) {
+            if (userAndMessage.getUser().getUId().equals(userId)) {
+                messageList.addAll(userAndMessage.getMessage());
+                break;
+            }
         }
-        saveAllUsers(owner);
+        userMessagesData.setValue(Resource.success(messageList));
+
     }
 
-    public LiveData<Resource<List<User>>> getUsersList() {
-        return usersListData;
+    public LiveData<Resource<List<Message>>> getUserMessagesData() {
+        return userMessagesData;
     }
 
+    public void saveNewMessage(Message message) {
+        appRepository.saveMessage(message);
+    }
+
+    public void updateUser(User user) {
+        appRepository.updateUser(user);
+    }
 }

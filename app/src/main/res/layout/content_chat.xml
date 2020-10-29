@@ -17,8 +17,8 @@
             android:id="@+id/message_layout"
             >
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@android:drawable/ic_menu_send"
                 app:tint="@color/design_default_color_secondary_variant"
                 android:id="@+id/send_msg_btn"
@@ -33,11 +33,12 @@
                 android:layout_toStartOf="@+id/send_msg_btn"
                 android:id="@+id/message_et"
                 android:hint="@string/message"
-                android:textSize="21sp"
+                android:textSize="18sp"
                 android:textColorHint="#e9e9e9"
                 android:gravity="start|center"
                 android:inputType="textMultiLine"
                 android:textColor="@color/black"
+                android:padding="9dp"
                 android:background="@android:color/transparent"
                 android:textCursorDrawable="@drawable/message_cursor"
                 />

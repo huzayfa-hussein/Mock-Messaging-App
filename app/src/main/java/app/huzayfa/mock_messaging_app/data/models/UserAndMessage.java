@@ -1,6 +1,7 @@
 package app.huzayfa.mock_messaging_app.data.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;
@@ -20,5 +21,5 @@ public class UserAndMessage {
             entityColumn = "userId",
             entity = Message.class
     )
-    private ArrayList<Message> message;
+    private List<Message> message;
 }
