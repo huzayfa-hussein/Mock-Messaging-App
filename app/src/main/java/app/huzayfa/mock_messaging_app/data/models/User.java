@@ -31,6 +31,12 @@ public class User implements Parcelable {
     @TypeConverters({DateDeserializer.class})
     private Date sent_at;
 
+
+    public User(String name, String image) {
+        this.name = name;
+        this.image = image;
+    }
+
     protected User(Parcel in) {
         if (in.readByte() == 0) {
             uId = null;

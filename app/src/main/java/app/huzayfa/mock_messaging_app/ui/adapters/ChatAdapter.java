@@ -1,10 +1,13 @@
 package app.huzayfa.mock_messaging_app.ui.adapters;
 
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -77,6 +80,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void bindUi(Message message) {
             sender_msg_tv.setText(message.getSentMessage());
+//            String stDate = (String) DateUtils.getRelativeTimeSpanString(message.getSendsAt().getTime(), Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
             sender_msg_date_tv.setText(MethodUtility.dateToString(message.getSendsAt()));
         }
 

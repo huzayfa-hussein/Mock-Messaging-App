@@ -1,16 +1,16 @@
 package app.huzayfa.mock_messaging_app.data.helper;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class MethodUtility {
 
     public static void toast(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
     public static boolean isEven(int num) {
@@ -26,9 +26,17 @@ public class MethodUtility {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        sdf = new SimpleDateFormat("HH:mm", locale);
+
+        sdf = new SimpleDateFormat(checkIfToday(newDate) ? "HH:mm" : "dd/MM/yyyy", locale);
 
         return sdf.format(newDate);
 
+    }
+
+    public static boolean checkIfToday(Date date) {
+        Calendar today = Calendar.getInstance();
+        Calendar dateCalendar = Calendar.getInstance();
+        dateCalendar.setTime(date);
+        return today.get(Calendar.DAY_OF_YEAR) == dateCalendar.get(Calendar.DAY_OF_YEAR);
     }
 }

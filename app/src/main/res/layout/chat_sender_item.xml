@@ -1,67 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-    >
-
-    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="300dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
+        >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/message_right_bg"
         android:padding="9dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="true"
+        >
         <TextView
             android:id="@+id/sender_msg_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="1dp"
-            android:gravity="center"
-            android:text="Hello Huzayfa how are you?"
-            android:textColor="@color/black"
+            android:maxWidth="300dp"
+            android:text="Hello "
+            android:textColor="@color/msg_color"
             android:textSize="15sp"
-            android:typeface="normal"
-             />
+            android:typeface="normal" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="13dp">
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/sender_msg_tv"
+            android:orientation="horizontal">
 
 
 
-        <TextView
-            android:id="@+id/sender_msg_date_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="9dp"
-            android:text="20:20"
-            android:textColor="@color/dark_kakhi"
-            android:textSize="11sp"
-             />
+            <TextView
+                android:id="@+id/sender_msg_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="9dp"
+                android:text="20:20"
+                android:textColor="@color/sent_date_color"
+                android:textSize="11sp" />
+
 
             <ImageView
+                android:id="@+id/seen_iv"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@drawable/double_check"
                 android:layout_gravity="center"
-                app:tint="@color/dark_kakhi"
-                android:id="@+id/seen_iv"
-                />
+                android:src="@drawable/double_check"
+                app:tint="@color/sent_date_color" />
         </LinearLayout>
+    </RelativeLayout>
 
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+

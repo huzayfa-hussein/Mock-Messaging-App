@@ -8,13 +8,16 @@
 
 
    <include layout="@layout/content_chat"
+       android:layout_below="@+id/chat_toolbar"
+       android:layout_height="match_parent"
+       android:layout_width="match_parent"
 
        />
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/streel_blue"
+        android:background="@color/toolbar_color"
         android:id="@+id/chat_toolbar"
         android:layout_alignParentTop="true"
         >

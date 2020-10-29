@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -25,12 +26,12 @@ import app.huzayfa.mock_messaging_app.ui.ChatActivity;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private FragmentActivity context;
-    private List<User> users;
-//    private List<User> users;
+    private List<User> users, filteredList;
 
     public UserAdapter(FragmentActivity context, List<User> users) {
         this.context = context;
         this.users = users;
+        this.filteredList = new ArrayList<>();
 
 
     }
@@ -44,24 +45,37 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.userNameTv.setText(users.get(position).getName());
-//        Picasso.get().load(Uri.parse(users.get(position).getName())).into(holder.userProfileIv);
-        holder.userNameTv.setText(users.get(position).getName());
-        Picasso.get().load(Uri.parse(users.get(position).getImage())).into(holder.userProfileIv);
+        User user = filteredList == null || filteredList.isEmpty() ? users.get(position) : filteredList.get(position);
+        holder.userNameTv.setText(user.getName());
+        Picasso.get().load(Uri.parse(user.getImage())).into(holder.userProfileIv);
 
-        holder.last_msg_date_tv.setText(users.get(position).getSent_at() == null ? "" : MethodUtility.dateToString(users.get(position).getSent_at()));
-        holder.latestMsgTv.setText(users.get(position).getMsg() != null ? users.get(position).getMsg() : "");
+        holder.last_msg_date_tv.setText(user.getSent_at() == null ? "" : MethodUtility.dateToString(users.get(position).getSent_at()));
+        holder.latestMsgTv.setText(user.getMsg() != null ? users.get(position).getMsg() : "");
 
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return filteredList == null || filteredList.isEmpty() ? users.size() : filteredList.size();
     }
 
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public void filterUsers(String query) {
+        filteredList.clear();
+        if (query.isEmpty()) {
+            filteredList.addAll(users);
+        } else {
+            for (User user : users) {
+                if (user.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(user);
+                }
+            }
+            notifyDataSetChanged();
+        }
     }
 
 

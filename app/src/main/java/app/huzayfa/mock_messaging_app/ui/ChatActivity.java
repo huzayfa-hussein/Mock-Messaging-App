@@ -1,5 +1,20 @@
 package app.huzayfa.mock_messaging_app.ui;
 
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,30 +22,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import app.huzayfa.mock_messaging_app.R;
 import app.huzayfa.mock_messaging_app.data.helper.Constants;
-import app.huzayfa.mock_messaging_app.data.helper.MethodUtility;
 import app.huzayfa.mock_messaging_app.data.models.Message;
 import app.huzayfa.mock_messaging_app.data.models.Status;
 import app.huzayfa.mock_messaging_app.data.models.User;
 import app.huzayfa.mock_messaging_app.ui.adapters.ChatAdapter;
 import app.huzayfa.mock_messaging_app.viewModels.ChatViewModel;
-import butterknife.*;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
+import butterknife.Unbinder;
 
 public class ChatActivity extends AppCompatActivity {
 
