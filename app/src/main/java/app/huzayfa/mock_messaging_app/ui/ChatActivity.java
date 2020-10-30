@@ -82,6 +82,11 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * load and observe all messages that’ve been sent back and forth previously
+     * and send them to {@link ChatAdapter}
+     * {@link #setChatAdapter()}
+     */
     private void loadUserMessages() {
         userMessages = new ArrayList<>();
         chatViewModel.fetchUserMessages(user.getUId(), this);
@@ -94,12 +99,19 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+
     private void setChatAdapter() {
         ChatAdapter chatAdapter = new ChatAdapter(this, userMessages);
         chatAdapter.notifyDataSetChanged();
         chatRv.setAdapter(chatAdapter);
     }
 
+    /**
+     * Handle on item home clicked
+     * call {@link #onBackPressed()}
+     *
+     * @param item
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -110,11 +122,23 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * listen to the {@link #messageEt}
+     */
+
     @OnTextChanged(R.id.message_et)
     public void setMessage(CharSequence charSequence) {
         message = messageEt.getText().toString();
     }
 
+    /**
+     * Handle onClick on sendBtn
+     * a new {@link Message} will be saved by
+     * {@link #saveMessage(Message)} then it will
+     * save the {@link #replyMessage(String)}
+     *
+     * @param view is the clicked view
+     */
     @OnClick(R.id.send_msg_btn)
     public void sendMessage(View view) {
         if (message.equals("")) {
@@ -123,7 +147,7 @@ public class ChatActivity extends AppCompatActivity {
         Message senderMsg = new Message();
         senderMsg.setSentMessage(message);
         senderMsg.setUserId(user.getUId());
-        senderMsg.setSendsAt(Calendar.getInstance().getTime());
+        senderMsg.setSent_at(Calendar.getInstance().getTime());
         String msg = message;
         messageEt.setText("");
         saveMessage(senderMsg);
@@ -131,6 +155,13 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method is responsible to echo the same message
+     * in the {@link #saveMessage(Message)} after a
+     * randomized delay of 0.5 seconds
+     *
+     * @param msg is the message that will be saved again to db
+     */
     private void replyMessage(String msg) {
         long duration = (long) (Math.random() * 500);
         new Handler().postDelayed(new Runnable() {
@@ -139,10 +170,10 @@ public class ChatActivity extends AppCompatActivity {
                 Message rcMsg = new Message();
                 rcMsg.setReceivedMessage(msg);
                 rcMsg.setUserId(user.getUId());
-                rcMsg.setSendsAt(Calendar.getInstance().getTime());
+                rcMsg.setSent_at(Calendar.getInstance().getTime());
                 saveMessage(rcMsg);
                 user.setMsg(msg);
-                user.setSent_at(rcMsg.getSendsAt());
+                user.setSent_at(rcMsg.getSent_at());
                 chatViewModel.updateUser(user);
 
             }

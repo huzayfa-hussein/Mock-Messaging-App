@@ -17,6 +17,14 @@ import app.huzayfa.mock_messaging_app.data.models.User;
 import app.huzayfa.mock_messaging_app.data.models.UserAndMessage;
 import app.huzayfa.mock_messaging_app.data.repositories.AppRepository;
 
+/**
+ * This viewModel class is responsible for
+ * communicate with {@link AppRepository} to
+ * get the data required for {@link app.huzayfa.mock_messaging_app.ui.ChatActivity}
+ * activity and prepare ui logic for the activity
+ *
+ * @author Huzayfa
+ */
 
 public class ChatViewModel extends AndroidViewModel {
 
@@ -30,6 +38,16 @@ public class ChatViewModel extends AndroidViewModel {
         userMessagesData = new MutableLiveData<>();
 
     }
+
+    /**
+     * This method is listening to  the liveData object returned
+     * from {@link AppRepository} then filter messages based on the
+     *
+     * @param userId with {@link #setUserMessages(Long, List)} and update
+     *               the value {@link #userMessagesData}
+     * @param owner  is the activity lifecycle owner and used in observing
+     *               liveData
+     */
 
     public void fetchUserMessages(Long userId, LifecycleOwner owner) {
         userMessagesData.setValue(Resource.loading(null));
@@ -58,9 +76,13 @@ public class ChatViewModel extends AndroidViewModel {
         });
     }
 
-    private void setUserMessages(Long userId, List<UserAndMessage> data) {
+    /**
+     * This method is used to filter @param userAndMessages
+     * based on @param userId
+     */
+    private void setUserMessages(Long userId, List<UserAndMessage> userAndMessages) {
         List<Message> messageList = new ArrayList<>();
-        for (UserAndMessage userAndMessage : data) {
+        for (UserAndMessage userAndMessage : userAndMessages) {
             if (userAndMessage.getUser().getUId().equals(userId)) {
                 messageList.addAll(userAndMessage.getMessage());
                 break;
@@ -70,13 +92,30 @@ public class ChatViewModel extends AndroidViewModel {
 
     }
 
+    /**
+     * @return a liveData object to observe and listen to any
+     * change in data later on in {@link app.huzayfa.mock_messaging_app.ui.ChatActivity}
+     */
     public LiveData<Resource<List<Message>>> getUserMessagesData() {
         return userMessagesData;
     }
 
+    /**
+     * This method will be invoked when the {@link User}
+     * send a new {@link Message} with @param message
+     */
+
     public void saveNewMessage(Message message) {
         appRepository.saveMessage(message);
     }
+
+    /**
+     * This method will be invoked when we try
+     * to update{@link User} record with the
+     * latest message
+     *
+     * @param user is the record that will be updated
+     */
 
     public void updateUser(User user) {
         appRepository.updateUser(user);

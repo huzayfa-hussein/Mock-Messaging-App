@@ -13,6 +13,13 @@ import app.huzayfa.mock_messaging_app.data.models.Resource;
 import app.huzayfa.mock_messaging_app.data.models.User;
 import app.huzayfa.mock_messaging_app.data.models.UserAndMessage;
 
+/**
+ * This repository class is responsible
+ * to communicate with {@link DaoService}
+ * to fetch and save data to {@link DaoDatabase}
+ *
+ * @author Huzayfa
+ */
 public class AppRepository {
 
     private DaoService daoService;
@@ -27,6 +34,13 @@ public class AppRepository {
         userMessagesData = new MutableLiveData<>();
     }
 
+    /**
+     * This method will run on background thread
+     * using {@link java.util.concurrent.ExecutorService}
+     * and will post the {@link #usersListData} with the returned
+     * users
+     */
+
     public void fetchAllUsers() {
         usersListData.setValue(Resource.loading(null));
         DaoDatabase.databaseWriteExecutor.execute(() -> {
@@ -38,12 +52,21 @@ public class AppRepository {
 
     }
 
+    /**
+     * @return a liveData object to observe and listen to any
+     * change in data later on in {@link app.huzayfa.mock_messaging_app.viewModels.UsersListViewModel}
+     */
 
     public LiveData<Resource<List<User>>> getUsersListData() {
         return usersListData;
     }
 
-
+    /**
+     * This method will run on background thread
+     * using {@link java.util.concurrent.ExecutorService}
+     * and will post the {@link #userMessagesData} with the returned
+     * {@link UserAndMessage}
+     */
     public void fetchAllUserMessages() {
         userMessagesData.setValue(Resource.loading(null));
         DaoDatabase.databaseWriteExecutor.execute(() -> {
@@ -54,23 +77,43 @@ public class AppRepository {
         });
     }
 
+    /**
+     * @return a liveData object to observe and listen to any
+     * change in data later on in {@link app.huzayfa.mock_messaging_app.viewModels.ChatViewModel}
+     */
+
     public LiveData<Resource<List<UserAndMessage>>> getUserMessages() {
         return userMessagesData;
     }
 
 
+    /**
+     * This method is responsible to update
+     *
+     * @param user to {@link DaoDatabase}
+     */
     public void updateUser(User user) {
         DaoDatabase.databaseWriteExecutor.execute(() -> {
             daoService.updateUser(user);
         });
     }
 
+    /**
+     * This method is responsible to insert a new
+     *
+     * @param message to {@link DaoDatabase}
+     */
     public void saveMessage(Message message) {
         DaoDatabase.databaseWriteExecutor.execute(() -> {
             daoService.saveNewMessage(message);
         });
     }
 
+    /**
+     * This method is responsible to insert a new
+     *
+     * @param user to {@link DaoDatabase}
+     */
     public void addUser(User user) {
         DaoDatabase.databaseWriteExecutor.execute(() -> {
             daoService.insertUser(user);

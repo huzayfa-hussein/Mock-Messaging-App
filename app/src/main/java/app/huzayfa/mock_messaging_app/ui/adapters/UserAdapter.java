@@ -64,6 +64,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return position;
     }
 
+    /**
+     * This method is used to filter
+     * {@link #users} with the @param query
+     * and returned the filteredList
+     */
+
     public void filterUsers(String query) {
         filteredList.clear();
         if (query.isEmpty()) {
@@ -92,6 +98,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             userProfileIv = itemView.findViewById(R.id.user_iv);
             last_msg_date_tv = itemView.findViewById(R.id.last_msg_date_tv);
             latestMsgTv = itemView.findViewById(R.id.latest_msg_tv);
+            //redirect to chat activity
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

@@ -11,6 +11,14 @@ import androidx.room.RoomDatabase;
 import app.huzayfa.mock_messaging_app.data.models.Message;
 import app.huzayfa.mock_messaging_app.data.models.User;
 
+/**
+ * This abstract class used to create
+ * room database with access to {@link DaoService}
+ * with the declared entities {@link User} & {@link Message}
+ *
+ * @author Huzayfa
+ */
+
 @Database(entities = {User.class, Message.class}, version = 1, exportSchema = false)
 public abstract class DaoDatabase extends RoomDatabase {
 
@@ -22,6 +30,14 @@ public abstract class DaoDatabase extends RoomDatabase {
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+
+    /**
+     * This method use the {@link #INSTANCE} singleton to prevents
+     * multiple instances of db open at the same time
+     *
+     * @return if {@link #INSTANCE} is null it will create the database
+     * otherwise it will return it
+     */
     public static DaoDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (DaoDatabase.class) {

@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/mode"
-        android:title="@string/mode"
-        android:icon="@drawable/ic_night"
+        android:title="@string/ui_mode"
+        android:icon="@drawable/ic_light"
         app:showAsAction="collapseActionView|ifRoom"
         />
 

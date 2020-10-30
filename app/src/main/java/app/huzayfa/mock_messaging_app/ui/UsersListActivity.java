@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +68,14 @@ public class UsersListActivity extends AppCompatActivity implements SearchView.O
 
     }
 
+    /**
+     * This method is used to load and observe users data
+     * the observer will still awake until userList size
+     * became more than 200, then the observer will be removed.
+     * Every time the observer invoked with new data the {@link #userAdapter}
+     * will be notified.  {@link #shouldUpdateAdapter} is true when
+     * returning from {@link ChatActivity}
+     */
 
     private void loadUsers() {
         usersListViewModel.fetchAllUsers(this);
@@ -110,6 +117,16 @@ public class UsersListActivity extends AppCompatActivity implements SearchView.O
             }
         });
     }
+
+    /**
+     * This method is listening to {@link #usersRv} scroll listener
+     * and create a lazy loading for the {@link #userList} into
+     * {@link #userAdapter} instead of loading 200 users at the same time
+     * When the user reached the bottom of the {@link #usersRv} the loadNewUsers
+     * <p>
+     * Note:This method will take action only if the {@link #userList} not reached
+     * the 200 record
+     */
 
     private void initRvScrollLazyLoading() {
         usersRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -159,6 +176,12 @@ public class UsersListActivity extends AppCompatActivity implements SearchView.O
         return true;
     }
 
+    /**
+     * check if the mode is night or light
+     * and change @param modeItem icon based on
+     * the active ui mode
+     */
+
     private void setDarkModeIcon(MenuItem modeItem) {
         int nightModeFlags =
                 getResources().getConfiguration().uiMode &
@@ -182,11 +205,9 @@ public class UsersListActivity extends AppCompatActivity implements SearchView.O
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.mode) {
-            if (item.getIcon() == ResourcesCompat.getDrawable(getResources(), R.drawable.ic_night, getResources().newTheme())) {
-                item.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_light, getResources().newTheme()));
+            if (item.getTitle().equals("light")) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
-                item.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_night, getResources().newTheme()));
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         }
@@ -200,11 +221,25 @@ public class UsersListActivity extends AppCompatActivity implements SearchView.O
         unbinder.unbind();
     }
 
+    /**
+     * filter the {@link #userList}
+     * based on @param query
+     *
+     * @return
+     */
+
     @Override
     public boolean onQueryTextSubmit(String query) {
         userAdapter.filterUsers(query);
         return false;
     }
+
+    /**
+     * filter the {@link #userList}
+     * based on @param query
+     *
+     * @return
+     */
 
     @Override
     public boolean onQueryTextChange(String newText) {

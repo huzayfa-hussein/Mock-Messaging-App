@@ -1,13 +1,10 @@
 package app.huzayfa.mock_messaging_app.ui.adapters;
 
-import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -65,6 +62,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return position;
     }
 
+    /**
+     * This viewHolder class is responsible
+     * to hold sender item view and use
+     * {@link #bindUi(Message)} to bind the view with
+     * {@link Message} data
+     */
 
     public class SenderViewHolder extends RecyclerView.ViewHolder {
 
@@ -80,11 +83,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void bindUi(Message message) {
             sender_msg_tv.setText(message.getSentMessage());
-//            String stDate = (String) DateUtils.getRelativeTimeSpanString(message.getSendsAt().getTime(), Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
-            sender_msg_date_tv.setText(MethodUtility.dateToString(message.getSendsAt()));
+            sender_msg_date_tv.setText(MethodUtility.dateToString(message.getSent_at()));
         }
 
     }
+
+    /**
+     * This viewHolder class is responsible
+     * to hold received item view and use
+     * {@link #bindUi(Message)} to bind the view with
+     * {@link Message} data
+     */
 
     private class ReceivedViewHolder extends RecyclerView.ViewHolder {
 
@@ -101,7 +110,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void bindUi(Message message) {
             receiver_msg_tv.setText(message.getReceivedMessage());
-            receiver_date_tv.setText(MethodUtility.dateToString(message.getSendsAt()));
+            receiver_date_tv.setText(MethodUtility.dateToString(message.getSent_at()));
 
         }
     }

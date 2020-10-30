@@ -14,9 +14,9 @@
         android:theme="@style/Theme.MockMessagingApp">
         <activity android:name=".ui.ChatActivity"
             android:screenOrientation="portrait"
-            android:configChanges="uiMode"/>
+            />
         <activity android:name=".ui.UsersListActivity"
-           android:configChanges="uiMode" >
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

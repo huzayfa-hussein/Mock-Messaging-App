@@ -5,14 +5,31 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-import androidx.room.*;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 import app.huzayfa.mock_messaging_app.data.converters.DateDeserializer;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * This entity class used to read and write
+ * {@link User} to {@link app.huzayfa.mock_messaging_app.data.dao.DaoDatabase}
+ * The {@link #name} is the full user name and {@link #image} is the avatar image
+ * for each {@link User}
+ * The {@link #msg} & {@link #sent_at} parameters used for fetch and update user latest
+ * {@link Message}
+ *
+ * @author Huzayfa
+ */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(tableName = "users")
+
 public class User implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)

@@ -3,4 +3,5 @@
     <string name="message">Message</string>
     <string name="search_title">Search</string>
     <string name="mode">Mode</string>
+    <string name="ui_mode">light</string>
 </resources>

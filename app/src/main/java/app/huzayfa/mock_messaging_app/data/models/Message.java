@@ -14,6 +14,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This entity class used to read and write
+ * message to {@link app.huzayfa.mock_messaging_app.data.dao.DaoDatabase}
+ * It contains {@link #userId} that used to create the relationship
+ * with {@link User}
+ * The {@link #sentMessage} will be the same of the
+ * {@link #receivedMessage} since it is mock message
+ * {@link #sent_at} indicates the timestamp for the
+ * {@link Message}
+ *
+ * @author Huzayfa
+
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,7 +47,7 @@ public class Message implements Parcelable {
 
     @ColumnInfo(name = "sends_at")
     @TypeConverters({DateDeserializer.class})
-    private Date sendsAt;
+    private Date sent_at;
 
     protected Message(Parcel in) {
         if (in.readByte() == 0) {
@@ -50,8 +64,8 @@ public class Message implements Parcelable {
         sentMessage = in.readString();
 
         if (in.readByte() == 0) {
-            sendsAt = null;
-        } else sendsAt = new Date(in.readLong());
+            sent_at = null;
+        } else sent_at = new Date(in.readLong());
     }
 
     public static final Creator<Message> CREATOR = new Creator<Message>() {
@@ -87,11 +101,11 @@ public class Message implements Parcelable {
         }
         parcel.writeString(receivedMessage);
         parcel.writeString(sentMessage);
-        if (sendsAt == null) {
+        if (sent_at == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(sendsAt.getTime());
+            parcel.writeLong(sent_at.getTime());
         }
     }
 }

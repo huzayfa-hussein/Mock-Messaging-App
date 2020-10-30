@@ -10,10 +10,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import androidx.room.TypeConverter;
+
+/**
+ * This class is used to convert and deserialize
+ * the {@link Date} object to a specific date format {@link #DATE_FORMAT}
+ *
+ * @author Huzayfa
+ */
 
 public class DateDeserializer implements JsonDeserializer<Date> {
     private static String[] DATE_FORMAT = new String[]{"yyyy-MM-dd HH:mm:ss",
@@ -22,15 +28,12 @@ public class DateDeserializer implements JsonDeserializer<Date> {
 
     @Override
     public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-//        for (String format : DATE_FORMAT) {
         try {
             String date = json.getAsString();
-//                SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
             df.setTimeZone(TimeZone.getTimeZone("GMT"));
             return df.parse(date);
         } catch (ParseException e) {
         }
-//        }
         throw new JsonParseException("Unparseable date: \"" + json.getAsString()
                 + "\". Supported formats: \n" + Arrays.toString(DATE_FORMAT));
     }
@@ -55,6 +58,5 @@ public class DateDeserializer implements JsonDeserializer<Date> {
         TimeZone timeZone = TimeZone.getTimeZone("IST");
         df.setTimeZone(timeZone);
         return value == null ? null : df.format(value);
-//        return null;
     }
 }

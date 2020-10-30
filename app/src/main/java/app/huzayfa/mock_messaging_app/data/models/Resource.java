@@ -3,7 +3,13 @@ package app.huzayfa.mock_messaging_app.data.models;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-
+/**
+ * A wrapper class that helps to perform an action
+ * based on {@link Status}
+ *
+ * @param <T>
+ * @author Huzayfa
+ */
 public class Resource<T> {
     @NonNull
     public final Status status;
