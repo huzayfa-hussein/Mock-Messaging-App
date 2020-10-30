@@ -6,6 +6,6 @@ the sent message after a randomized delay of 0.5s. All the data are saved in a l
 database.
 
 ## Installation:
-1. Android Gradle Plugin Version: ###4.1 or higher
-2. Gradle Version : ###6.5
-3. Lombok plugin
+1. Android Gradle Plugin Version: ##4.1 or higher
+2. Gradle Version : ##6.5
+3. Lombok plugin [see this](https://projectlombok.org/setup/android)
