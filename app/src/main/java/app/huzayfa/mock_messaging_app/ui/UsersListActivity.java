@@ -201,6 +201,12 @@ public class UsersListActivity extends AppCompatActivity implements SearchView.O
         }
     }
 
+    /**
+     * on @param item change app ui mode
+     *
+     * @return
+     */
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
